@@ -1,7 +1,7 @@
 ---
 title: Linux 快速上手
 date: 2018-11-03 00:00:00
-author: onlyzdd
+author: 竹一木
 categories: [开发, Linux]
 tags: [linux]
 ---
