@@ -6,8 +6,6 @@ categories: [开发, Linux]
 tags: [linux]
 ---
 
-# Linux 快速上手
-
 本文档旨在帮助快速熟悉 Linux 远程操作，全部内容在 Centos 7 下的 GNU Bash 4.2.46(2)-release (x86_64-redhat-linux-gnu) 测试通过。
 
 ## 准备工作
