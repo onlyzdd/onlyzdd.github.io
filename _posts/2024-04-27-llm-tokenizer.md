@@ -109,7 +109,7 @@ Unigram 与以上自底向上的方法不同，该算法首先初始化一个非
 
 该分词方法基于 Unigram 语言模型，认为当前词的出现不依赖于前面的词，因此子词序列 $\mathbf{x} = (x_1, \cdots, x_M)$ 的概率将表示为 $P(\mathbf{x}) = \prod_{i=1}^{M}p(x_i)$，其中 $\forall{i}, x_i \in \mathcal V, \sum_{x \in {\mathcal{V}}} p(x) = 1$。
 
-对于输入文本 $X$，其最优分割 $\mathbf{x}^*$，即 $\mathbf{x}^* = \underset{\mathbf{x} \in S(X)}\arg\max P(\mathbf{x})$，其中 $S(X)$ 为 $X$ 的所有可能分割，最优分割可用 Viterbi 算法求解**最大概率路径**即可。
+对于输入文本 $X$，其最优分割 $\mathbf{x}^*$，即 $\mathbf{x}^{*} = \underset{\mathbf{x} \in S(X)}\arg\max P(\mathbf{x})$，其中 $S(X)$ 为 $X$ 的所有可能分割，最优分割可用 Viterbi 算法求解**最大概率路径**即可。
 
 对于语料库 $\mathcal D$ 和词表 $\mathcal V$，算法通过不断重复以下步骤，以得到最终的词表：
 
