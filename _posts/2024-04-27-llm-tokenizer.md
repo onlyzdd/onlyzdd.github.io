@@ -309,7 +309,7 @@ HOW：为解决 Llama2 分词器编码中文的问题，Chinese Llama2 对其扩
 在 Huggingface Transformers 中，分词器一般分为 Slow 和 Fast 两类：
 
 1. Slow：指原始版本实现，一般是纯 Python、SentencePiece、Tiktoken 等
-2. Fast：一般指 Tokenizers 版实现，需要兼容不同（并不能保证一定更快）
+2. Fast：一般指 Tokenizers 版实现，需将 Slow 版转换为 Tokenizers 要求的文件格式（并不能保证一定更快）
 
 ### Transformers 中 AutoTokenizer 的 Bug
 
@@ -328,7 +328,7 @@ print(gemma_tokenizer.tokenize("<s>")) # ['<s>']
 print(gemma_auto_tokenizer.tokenize("<s>")) # ['<', 's', '>']
 ```
 
-Gemma 模型中该 Bug 于 2024.04.17 被修复，但其他使用 SentencePiece 作为分词器的模型仍会有此类兼容问题。其本质上是 Tokenizers 对 SentencePiece 中 USER_DEFINED 符号兼容的 Bug，关于此类问题的相关信息可参考 [convert_slow_tokenizer.py][convert_slow_tokenizer.py] 和 [AutoTokenizer tokenization issue][autotokenizer_issue]。预计此类 Bug 将在不远的未来被统一解决。
+Gemma 模型中该 Bug 于 2024.04.17 被[修复][gemma-fix-tokenizer]，但其他使用 SentencePiece 作为分词器的模型仍会有此类兼容问题。其本质上是 Tokenizers 对 SentencePiece 中 USER_DEFINED 符号兼容的 Bug，关于此类问题的相关信息可参考 [convert_slow_tokenizer.py][convert_slow_tokenizer.py] 和 [AutoTokenizer tokenization issue][autotokenizer_issue]。预计此类 Bug 将在不远的未来被统一解决。
 
 [Llama2-7b]: https://huggingface.co/meta-Llama/Llama-2-7b
 [mistral-7b]: https://huggingface.co/mistralai/Mistral-7B-v0.1
@@ -356,3 +356,4 @@ Gemma 模型中该 Bug 于 2024.04.17 被修复，但其他使用 SentencePiece 
 [llama3-8b]: https://huggingface.co/meta-llama/Meta-Llama-3-8B
 [qwen1.5_0.5b]: https://huggingface.co/Qwen/Qwen1.5-0.5B
 [tiktokenizer]: https://tiktokenizer.vercel.app/
+[gemma-fix-tokenizer]: https://huggingface.co/google/gemma-2b/discussions/50
