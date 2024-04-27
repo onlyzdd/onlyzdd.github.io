@@ -121,7 +121,7 @@ Unigram 与以上自底向上的方法不同，该算法首先初始化一个非
 
 在编码阶段，Unigram 允许在分词时加入正则化（即概率分割），对同一输入文本，可以产生多个不同的 Token 序列。具体地：
 
-1. 对于给定文本 $X$，根据概率得到最优的 $l$ 个分割 $P(\mathbf{x} | X)$
+1. 对于给定文本 $X$，根据概率得到最优的 $l$ 个分割 $P(\mathbf{x} \| X)$
 2. 从 $l$ 个分割中进行随机采样 $\mathbf{x}_i$：$P(\mathbf{x}_i | X) \cong \cfrac{P(\mathbf{x}_i)^\alpha}{\sum_{i=1}^{l}P(\mathbf{x}_i)^\alpha}$，其中 $\alpha \in \mathbb{R^+}$ 为平滑参数（其倒数即是温度）
 
 细节详见 [Subword Regularization: Improving Neural Network Translation Models with Multiple Subword Candidates][unigram]。Unigram 的代表模型包括 T5、XLNet、Reformer 等。
