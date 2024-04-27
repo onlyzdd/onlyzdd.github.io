@@ -107,7 +107,7 @@ WordPiece 的代表模型是 BERT、DistilBERT、MobileBERT、MPNET 等。由于
 
 Unigram 与以上自底向上的方法不同，该算法首先初始化一个非常大的子词词表 $\mathcal{V}$，然后逐渐从词表中移除词，直到 $\vert\mathcal{V}\vert$ 达到预设值。
 
-该分词方法基于 Unigram 语言模型，认为当前词的出现不依赖于前面的词，因此子词序列 $\mathbf{x} = (x\\_1, \cdots, x\\_M)$ 的概率将表示为 $P(\mathbf{x}) = \prod\\_{i=1}^{M}p(x\\_i)$，其中 $\forall{i}, x\\_i \in \mathcal V, \sum\\_{x \in {\mathcal{V}}} p(x) = 1$。
+该分词方法基于 Unigram 语言模型，认为当前词的出现不依赖于前面的词，因此子词序列 $\mathbf{x} = (x_1, \cdots, x_M)$ 的概率将表示为 $P(\mathbf{x}) = \prod_{i=1}^{M}p(x_i)$，其中 $\forall{i}, x_i \in \mathcal V, \sum_{x \in {\mathcal{V}}} p(x) = 1$。
 
 对于输入文本 $X$，其最优分割 $\mathbf{x}^*$，即 $\mathbf{x}^* = \underset{\mathbf{x} \in S(X)}\arg\max P(\mathbf{x})$，其中 $S(X)$ 为 $X$ 的所有可能分割，最优分割可用 Viterbi 算法求解**最大概率路径**即可。
 
@@ -115,14 +115,14 @@ Unigram 与以上自底向上的方法不同，该算法首先初始化一个非
 
 1. 使用 EM 算法学习 Unigram 语言模型
    1. E Step：根据模型参数 $p(x)$ 计算句子分割的条件概率期望
-   2. M step：最大化语言模型似然函数 $\mathcal L = \sum\\_{s \in \mathcal{D}} \log(P(X^{(s)}))$，更新 $p(x)$
-2. 对于一个子词 $x\\_i$，计算 $\mathcal V$ 中移除该子词时 $\mathcal L$ 减少的值，即损失 $loss\\_i$
-3. 根据 $loss\\_i$ 进行排序，只保留头部 $\eta\%$ 的子词，将其他子词移除掉（当然，单字符的子词是不会被移除的）
+   2. M step：最大化语言模型似然函数 $\mathcal L = \sum_{s \in \mathcal{D}} \log(P(X^{(s)}))$，更新 $p(x)$
+2. 对于一个子词 $x_i$，计算 $\mathcal V$ 中移除该子词时 $\mathcal L$ 减少的值，即损失 $loss_i$
+3. 根据 $loss_i$ 进行排序，只保留头部 $\eta\%$ 的子词，将其他子词移除掉（当然，单字符的子词是不会被移除的）
 
 在编码阶段，Unigram 允许在分词时加入正则化（即概率分割），对同一输入文本，可以产生多个不同的 Token 序列。具体地：
 
 1. 对于给定文本 $X$，根据概率得到最优的 $l$ 个分割 $P(\mathbf{x} \vert X)$
-2. 从 $l$ 个分割中进行随机采样 $\mathbf{x}\\_i$：$P(\mathbf{x}\\_i \vert X) \cong \cfrac{P(\mathbf{x}\\_i)^\alpha}{\sum\\_{i=1}^{l}P(\mathbf{x}\\_i)^\alpha}$，其中 $\alpha \in \mathbb{R^+}$ 为平滑参数
+2. 从 $l$ 个分割中进行随机采样 $\mathbf{x}_i$：$P(\mathbf{x}_i \vert X) \cong \cfrac{P(\mathbf{x}_i)^\alpha}{\sum_{i=1}^{l}P(\mathbf{x}_i)^\alpha}$，其中 $\alpha \in \mathbb{R^+}$ 为平滑参数
 
 细节详见 [Subword Regularization: Improving Neural Network Translation Models with Multiple Subword Candidates][unigram]。Unigram 的代表模型包括 T5、XLNet、Reformer 等。
 
