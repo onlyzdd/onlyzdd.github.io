@@ -125,11 +125,7 @@ $$
 2. 对于一个子词 $x_i$，计算 $\mathcal V$ 中移除该子词时 $\mathcal L$ 减少的值，即损失 $loss_i$
 3. 根据 $loss_i$ 进行排序，只保留头部 $\eta\%$ 的子词，将其他子词移除掉（当然，单字符的子词是不会被移除的）
 
-在编码阶段，Unigram 允许在分词时加入正则化（即概率分割），对同一输入文本，可以产生多个不同的 Token 序列。具体地：
-
-首先，对于给定文本 $X$，根据概率得到最优的 $l$ 个分割 $P(\mathbf{x} \vert X)$。
-
-然后，从 $l$ 个分割中采样 $\mathbf{x}_i$，
+在编码阶段，Unigram 允许在分词时加入正则化（即概率分割），对同一输入文本，可以产生多个不同的 Token 序列。对于给定文本 $X$，计算得到最优的 $l$ 个分割 $P(\mathbf{x} \vert X)$，从中采样 $\mathbf{x}_i$:
 
 $$
 P(\mathbf{x}_i \vert X) \cong \cfrac{P(\mathbf{x}_i)^\alpha}{\sum_{i=1}^{l}P(\mathbf{x}_i)^\alpha}
