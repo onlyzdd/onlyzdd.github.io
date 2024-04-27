@@ -105,7 +105,7 @@ WordPiece 的代表模型是 BERT、DistilBERT、MobileBERT、MPNET 等。由于
 
 ### Unigram
 
-Unigram 与以上自底向上的方法不同，该算法首先初始化一个非常大的子词词表 $\mathcal V$，然后逐渐从词表中移除词，直到 $|\mathcal V|$ 达到预设值。
+Unigram 与以上自底向上的方法不同，该算法首先初始化一个非常大的子词词表 $\mathcal{V}$，然后逐渐从词表中移除词，直到 $|\mathcal{V}|$ 达到预设值。
 
 该分词方法基于 Unigram 语言模型，认为当前词的出现不依赖于前面的词，因此子词序列 $\mathbf{x} = (x_1, \cdots, x_M)$ 的概率将表示为 $P(\mathbf{x}) = \prod_{i=1}^{M}p(x_i)$，其中 $\forall{i}, x_i \in \mathcal V, \sum_{x \in {\mathcal{V}}} p(x) = 1$。
 
