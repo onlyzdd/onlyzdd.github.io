@@ -14,28 +14,28 @@ math: true
 ### 分词粒度
 
 - Word
-  - 原则：基于空格和规则分词
-  - 优点：词的边界和含义得以保留
-  - 缺点：词表大；稀有词学不好；OOV 问题；无法处理词形关系
-- Char：
-  - 原则：基于字符分词
-  - 优点：词表小；更适合用于中文
-  - 缺点：对于英语，无法承载丰富的语义，不利于模型学习；序列太长
-- Subword：
-  - 原则：常用词不应该被分为更小的子词，但罕见词应该被分解为有意义的子词
-  - 优点：较好地平衡词表大小与语义承载能力
-  - 缺点：需要学习子词的拆分或合并规则
+  - 原则: 基于空格和规则分词
+  - 优点: 词的边界和含义得以保留
+  - 缺点: 词表大；稀有词学不好；OOV 问题；无法处理词形关系
+- Char: 
+  - 原则: 基于字符分词
+  - 优点: 词表小；更适合用于中文
+  - 缺点: 对于英语，无法承载丰富的语义，不利于模型学习；序列太长
+- Subword: 
+  - 原则: 常用词不应该被分为更小的子词，但罕见词应该被分解为有意义的子词
+  - 优点: 较好地平衡词表大小与语义承载能力
+  - 缺点: 需要学习子词的拆分或合并规则
 
 ### 不同任务对分词的要求
 
-- NLU：
-  - 任务：文本分类等
-  - 模型：BERT 系
-  - 分词：能表达语义即可，不要求还原能力，如大小写、重音符号、空格（广义）等不影响语义的可被格式化掉
-- NLG：
-  - 任务：文本生成等
-  - 模型：GPT 系
-  - 分词：需能表达语义、无损复原输入，即 Decode(Encode(text)) = text
+- NLU: 
+  - 任务: 文本分类等
+  - 模型: BERT 系
+  - 分词: 能表达语义即可，不要求还原能力，如大小写、重音符号、空格（广义）等不影响语义的可被格式化掉
+- NLG: 
+  - 任务: 文本生成等
+  - 模型: GPT 系
+  - 分词: 需能表达语义、无损复原输入，即 Decode(Encode(text)) = text
 
 > 广义空格是指 ` `、`\t`、`\r`、`\n` 等。
 
@@ -81,8 +81,8 @@ math: true
 
 #### 训练过程示例
 
-1. 语料库：`{"hug": 10, "pug": 5, "pun": 12, "bun": 4, "hugs": 5}`
-2. 初始化词表为字符集合：`{"b", "g", "h", "n", "p", "s", "u"}`
+1. 语料库: `{"hug": 10, "pug": 5, "pun": 12, "bun": 4, "hugs": 5}`
+2. 初始化词表为字符集合: `{"b", "g", "h", "n", "p", "s", "u"}`
 3. 如果词表已达预设大小，则退出；否则使用当前词表将语料库划分为符号序列（首次为 `{"h u g": 10, "p u g": 5, "p u n": 12, "b u n": 4, "h u g s": 5}`）
 4. 在符号序列中，将两两组合成 Pair，计算出现频次最高的 Pair（首次为 `ug`，出现 20 次）
 5. 将频次最高的 Pair 作为符号加入词表中（首次合并后得到 `{"b", "g", "h", "n", "p", "s", "u", "ug"}`），然后进入步骤 3
@@ -95,7 +95,7 @@ BBPE 最早由 GPT2 提出，其代表模型还包括 RoBERTa、BART 等，其�
 
 ### WordPiece
 
-WordPiece 由 Google 提出，用于 BERT 语言模型的分词。其思路与 BPE 类似，区别在于 Pair 的合并策略。BPE 中选择频次最高的 Pair 进行合并，而 WordPiece 使用语言模型来进行考虑。具体地，对子词 $t_1$、$t_2$，WordPiece 考虑合并成 Pair $t_{12}$ 的增益以确定是否合并：
+WordPiece 由 Google 提出，用于 BERT 语言模型的分词。其思路与 BPE 类似，区别在于 Pair 的合并策略。BPE 中选择频次最高的 Pair 进行合并，而 WordPiece 使用语言模型来进行考虑。具体地，对子词 $t_1$、$t_2$，WordPiece 考虑合并成 Pair $t_{12}$ 的增益以确定是否合并: 
 
 $$
 g = \log P(t_{12}) - (\log P(t_1) + \log P(t_2))
@@ -107,22 +107,22 @@ WordPiece 的代表模型是 BERT、DistilBERT、MobileBERT、MPNET 等。由于
 
 Unigram 与以上自底向上的方法不同，该算法首先初始化一个非常大的子词词表 $\mathcal{V}$，然后逐渐从词表中移除词，直到 $\vert\mathcal{V}\vert$ 达到预设值。
 
-该分词方法基于 Unigram 语言模型，认为当前词的出现不依赖于前面的词，因此子词序列 $\mathbf{x} = (x_1, \cdots, x_M)$ 的概率将表示为 $`P(\mathbf{x}) = \prod_{i=1}^{M}p(x_i)`$，其中 $\forall{i}, x_i \in \mathcal V, \sum_{x \in {\mathcal{V}}} p(x) = 1$。
+该分词方法基于 Unigram 语言模型，认为当前词的出现不依赖于前面的词，因此子词序列 $\mathbf{x} = (x_1, \cdots, x_M)$ 的概率将表示为 $P(\mathbf{x}) = \prod_{i=1}^{M}p(x_i)$，其中 $\forall{i}, x_i \in \mathcal V, \sum_{x \in {\mathcal{V}}} p(x) = 1$。
 
 对于输入文本 $X$，其最优分割 $\mathbf{x}^*$，即 $\mathbf{x}^* = \underset{\mathbf{x} \in S(X)}\arg\max P(\mathbf{x})$，其中 $S(X)$ 为 $X$ 的所有可能分割，最优分割可用 Viterbi 算法求解**最大概率路径**即可。
 
-对于语料库 $`\mathcal D`$ 和词表 $`\mathcal V`$，算法通过不断重复以下步骤，以得到最终的词表：
+对于语料库 $\mathcal D$ 和词表 $\mathcal V$，算法通过不断重复以下步骤，以得到最终的词表: 
 
 1. 使用 EM 算法学习 Unigram 语言模型
-   1. E Step：根据模型参数 $p(x)$ 计算句子分割的条件概率期望
-   2. M step：最大化语言模型似然函数 $\mathcal L = \sum_{s \in \mathcal{D}} \log(P(X^{(s)}))$，更新 $p(x)$
+   1. E Step: 根据模型参数 $p(x)$ 计算句子分割的条件概率期望
+   2. M step: 最大化语言模型似然函数 $\mathcal L = \sum_{s \in \mathcal{D}} \log(P(X^{(s)}))$，更新 $p(x)$
 2. 对于一个子词 $x_i$，计算 $\mathcal V$ 中移除该子词时 $\mathcal L$ 减少的值，即损失 $loss_i$
 3. 根据 $loss_i$ 进行排序，只保留头部 $\eta\%$ 的子词，将其他子词移除掉（当然，单字符的子词是不会被移除的）
 
-在编码阶段，Unigram 允许在分词时加入正则化（即概率分割），对同一输入文本，可以产生多个不同的 Token 序列。具体地：
+在编码阶段，Unigram 允许在分词时加入正则化（即概率分割），对同一输入文本，可以产生多个不同的 Token 序列。具体地: 
 
 1. 对于给定文本 $X$，根据概率得到最优的 $l$ 个分割 $P(\mathbf{x} \vert X)$
-2. 从 $l$ 个分割中进行随机采样 $\mathbf{x}_i$：$P(\mathbf{x}_i \vert X) \cong \cfrac{P(\mathbf{x}_i)^\alpha}{\sum_{i=1}^{l}P(\mathbf{x}_i)^\alpha}$，其中 $\alpha \in \mathbb{R^+}$ 为平滑参数
+2. 从 $l$ 个分割中进行随机采样 $\mathbf{x}_i$: $P(\mathbf{x}_i \vert X) \cong \cfrac{P(\mathbf{x}_i)^\alpha}{\sum_{i=1}^{l}P(\mathbf{x}_i)^\alpha}$，其中 $\alpha \in \mathbb{R^+}$ 为平滑参数
 
 细节详见 [Subword Regularization: Improving Neural Network Translation Models with Multiple Subword Candidates][unigram]。Unigram 的代表模型包括 T5、XLNet、Reformer 等。
 
@@ -138,20 +138,20 @@ SentencePiece 将输入文本作为 Unicode 字符序列，在训练和编码时
 
 ### 优势
 
-- 数据驱动：可以基于原始语料进行无监督训练，不依赖于语种中词的概念
-- 无损重构：分词结果可以无损还原输入
-- 分词算法：支持 BPE、Unigram、word-level、char-level
-- 自给自足：完全自给自足的分词工具
-- 性能与易用性：使用 C++ 编写，速度快、效率高；提供命令行工具和 Python 接口，便于使用
+- 数据驱动: 可以基于原始语料进行无监督训练，不依赖于语种中词的概念
+- 无损重构: 分词结果可以无损还原输入
+- 分词算法: 支持 BPE、Unigram、word-level、char-level
+- 自给自足: 完全自给自足的分词工具
+- 性能与易用性: 使用 C++ 编写，速度快、效率高；提供命令行工具和 Python 接口，便于使用
 
 > SentencePiece 使用 [Protobuf][sentencepiece_model.proto] 作为模型序列化格式，其中包含词表、合并规则，也包含标准化、训练过程中的参数，因此是完全的自给自足的。
 
 ### 组件
 
-- Normalizer：对文本进行标准化（大小写、Unicode 标准化等）
-- Trainer：加载语料到内存中，从中训练学习词表和合并规则
-- Encoder：使用 Normalizer 对输入文本执行标准化，接着分词并产生子词序列
-- Decoder：将子词序列转换为文本
+- Normalizer: 对文本进行标准化（大小写、Unicode 标准化等）
+- Trainer: 加载语料到内存中，从中训练学习词表和合并规则
+- Encoder: 使用 Normalizer 对输入文本执行标准化，接着分词并产生子词序列
+- Decoder: 将子词序列转换为文本
 
 ### 词表
 
@@ -159,15 +159,15 @@ SentencePiece 将输入文本作为 Unicode 字符序列，在训练和编码时
 
 词，语言模型的最小单位，亦是分词模型的基本单位。
 
-- piece：唯一字符串表示，一定是非空的
-- id：唯一数值表示，一定是整数
-- score：分值，决定子词的合并规则
-- type：类型，决定模型处理词时的行为
-- _surface_：字符串，用于 Piece 的显示
+- piece: 唯一字符串表示，一定是非空的
+- id: 唯一数值表示，一定是整数
+- score: 分值，决定子词的合并规则
+- type: 类型，决定模型处理词时的行为
+- _surface_: 字符串，用于 Piece 的显示
 
 #### 词的类型
 
-词的类型有 6 种：
+词的类型有 6 种: 
 
 |   词的类型   | 枚举值 |   默认符号    | 含义                                                   | 编码时                                 | 解码时                                               |
 |:------------:|:------:|:-------------:|:-------------------------------------------------------|:---------------------------------------|:-----------------------------------------------------|
@@ -216,8 +216,8 @@ SentencePiece 将输入文本作为 Unicode 字符序列，在训练和编码时
 
 ### BPE-Dropout
 
-- 背景：使用相同的词汇表对文本可以进行多种分割，但 BPE 将文本分割成独特的序列。这可能会阻止模型更好地学习单词的组成性以及对分割错误的鲁棒性。
-- 做法：编码时，对于一次合并，以一定概率取消合并，概率值一般取 0.1。
+- 背景: 使用相同的词汇表对文本可以进行多种分割，但 BPE 将文本分割成独特的序列。这可能会阻止模型更好地学习单词的组成性以及对分割错误的鲁棒性。
+- 做法: 编码时，对于一次合并，以一定概率取消合并，概率值一般取 0.1。
 
 ![BPE Dropout Process](/assets//img/20240427/bpe-dropout.png)
 
@@ -272,7 +272,7 @@ SentencePiece 将输入文本作为 Unicode 字符序列，在训练和编码时
 | Mistral 7B        |  31  | '▁', '人', '工', '智', '能', '是', '计', '算', '机', '科', '学', '、', '心', '理', '学', '、', '<0xE5>', '<0x93>', '<0xB2>', '学', '等', '学', '科', '融', '合', '的', '交', '叉', '学', '科', '。'                                                 |
 | Gemma 2B          |  15  | '人工智能', '是', '计算机', '科学', '、', '心理学', '、', '哲学', '等', '学科', '融合', '的', '交叉', '学科', '。'                                                                                                                                  |
 
-由上面的编码示例，可见：
+由上面的编码示例，可见: 
 
 1. Llama2 7B 和 Mistral 7B 分词器对中文的支持性较差，缺少长词，且一些词会被转换为 BYTE 类词
 2. Chinese Llama2 基于 Llama2 扩充中文词表，因此编码效率提升
@@ -280,13 +280,13 @@ SentencePiece 将输入文本作为 Unicode 字符序列，在训练和编码时
 
 ### SentencePiece 词表扩充——Chinese Llama2
 
-WHY：Llama2 预训练语料的语种主要是英语和少量欧洲语言，原始 Llama 的词表中只有不到 1,000 的中文字符，因此中文能力相对弱。对于未知的中文 UTF-8 字符，尽管 Llama2 分词器可以通过将其转换为字节的方式来编码，但仍会存在多种问题：
+WHY: Llama2 预训练语料的语种主要是英语和少量欧洲语言，原始 Llama 的词表中只有不到 1,000 的中文字符，因此中文能力相对弱。对于未知的中文 UTF-8 字符，尽管 Llama2 分词器可以通过将其转换为字节的方式来编码，但仍会存在多种问题: 
 
 1. 中文字符的 UTF-8 序列一般是 3-4 字节，导致编码、解码效率低，且会大幅增加序列长度
 2. 字节编码不能很好表达字符的语义特征
 3. 在解码时，可能会出现无效的 UTF-8 序列
 
-HOW：为解决 Llama2 分词器编码中文的问题，Chinese Llama2 对其扩充中文词表，具体做法：
+HOW: 为解决 Llama2 分词器编码中文的问题，Chinese Llama2 对其扩充中文词表，具体做法: 
 
 1. 在中文语料上训练一个 SentencePiece 模型，新词表大小为 32,000
 2. 将新词表与原词表取差集，在原词表后追加差集中的词
@@ -297,10 +297,10 @@ HOW：为解决 Llama2 分词器编码中文的问题，Chinese Llama2 对其扩
 
 [Tokenizers][huggingface_tokenizers] 是 Huggingface 提供的开源分词库，其提供了预处理、后处理、分词器训练、编码、解码等功能。Tokenizers 使用 Rust 编写，兼容常用分词算法，提供了 Python 接口，与 Huggingface Transformers 库集成更好、文档更全，定制和扩展更加灵活。
 
-在 Huggingface Transformers 中，分词器一般分为 Slow 和 Fast 两类：
+在 Huggingface Transformers 中，分词器一般分为 Slow 和 Fast 两类: 
 
-1. Slow：指原始版本实现，一般是纯 Python、SentencePiece、Tiktoken 等
-2. Fast：一般指 Tokenizers 版实现，需要兼容不同（并不能保证一定更快）
+1. Slow: 指原始版本实现，一般是纯 Python、SentencePiece、Tiktoken 等
+2. Fast: 一般指 Tokenizers 版实现，需要兼容不同（并不能保证一定更快）
 
 ### Transformers 中 AutoTokenizer 的 Bug
 
