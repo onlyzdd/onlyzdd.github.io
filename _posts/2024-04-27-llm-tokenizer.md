@@ -75,7 +75,7 @@ math: true
 
 在编码阶段，BPE 将输入作为字符序列，然后按照**词表和合并规则**，逐渐合并子词进而得到编码序列。
 
-![BPE token learner](./imgs/bpe.png)
+![BPE token learner](20240427/bpe.png)
 
 > 为以防止跨边界的子词出现，BPE 一般要求将文本先切分成单词。
 
@@ -219,7 +219,7 @@ SentencePiece 将输入文本作为 Unicode 字符序列，在训练和编码时
 - 背景：使用相同的词汇表对文本可以进行多种分割，但 BPE 将文本分割成独特的序列。这可能会阻止模型更好地学习单词的组成性以及对分割错误的鲁棒性。
 - 做法：编码时，对于一次合并，以一定概率取消合并，概率值一般取 0.1。
 
-![BPE Dropout Process](./imgs/bpe-dropout.png)
+![BPE Dropout Process](20240427/bpe-dropout.png)
 
 详见 [BPE-Dropout: Simple and Effective Subword Regularization][bpe-dropout]。
 
