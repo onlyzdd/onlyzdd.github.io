@@ -23,6 +23,7 @@ math: true
 
 来自 [Llama-2-7b-chat-hf/tokenizer_config.json][llama2-hf-chat-tpl]，对应的 Python 转换代码可以参考 [llama/generation.py][llama-generation]。
 
+{% raw %}
 ```jinja
 {% if messages[0]['role'] == 'system' %}
     {% set loop_messages = messages[1:] %}
@@ -47,11 +48,13 @@ math: true
     {% endif %}
 {% endfor %}
 ```
+{% endraw %}
 
 ## Mistral-7B-Instruct-v0.1
 
 来自 [Mistral-7B-Instruct-v0.1/tokenizer_config.json][mistral-instruct-v0.1-chat-tpl]。
 
+{% raw %}
 ```jinja
 {{ bos_token }}
 {% for message in messages %}
@@ -67,11 +70,13 @@ math: true
     {% endif %}
 {% endfor %}
 ```
+{% endraw %}
 
 ## Qwen-1.5-1.8B-Chat
 
 来自 [Qwen1.5-1.8B-Chat/tokenizer_config.json][qwen-1.5-chat-tpl]，其使用的是标准的 ChatML 格式。
 
+{% raw %}
 ```jinja
 {% for message in messages %}
     {% if loop.first and messages[0]['role'] != 'system' %}
@@ -83,6 +88,7 @@ math: true
     {{ '<|im_start|>assistant\n' }}
 {% endif %}
 ```
+{% endraw %}
 
 > [!IMPORTANT]
 > 如果消息列表中缺少 system 消息，Qwen-1.5-1.8B-Chat 的模板会自动添加一个，其内容为 `You are a helpful assistant.`。
@@ -91,6 +97,7 @@ math: true
 
 来自 [gemma-1.1-2b-it/tokenizer_config.json][gemma-1.1-it-chat-tpl]。
 
+{% raw %}
 ```jinja
 {{ bos_token }}
 {% if messages[0]['role'] == 'system' %}
@@ -111,6 +118,7 @@ math: true
     {{'<start_of_turn>model\n'}}
 {% endif %}
 ```
+{% endraw %}
 
 > [!IMPORTANT]
 > Gemma-1.1-2B-IT 不支持 system 消息，此外 assistant 消息在内部会被重命名为 model 消息。
@@ -119,6 +127,7 @@ math: true
 
 来自 [Meta-Llama-3-8B-Instruct/tokenizer_config.json][llama3-instruct-chat-tpl]。
 
+{% raw %}
 ```jinja
 {% set loop_messages = messages %}
 {% for message in loop_messages %}
@@ -132,6 +141,7 @@ math: true
     {{ '<|start_header_id|>assistant<|end_header_id|>\n\n' }}
 {% endif %}
 ```
+{% endraw %}
 
 另可参考官方实现 [llama3/tokenizer.py][llama3-tokenizer]。
 
