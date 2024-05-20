@@ -7,8 +7,6 @@ tags: [nlp, tokenizer, llm]
 math: true
 ---
 
-# 对话模型的模板
-
 ## 简介
 
 由于语言模型只接受非结构化的文本作为输入，为了方便模型处理多轮的对话消息列表，衍生出对话模板（chat template）。对话模板的目的是用于将消息列表转换为符合模型要求的文本字符串，这种有特殊标记的字符串格式被称为 Chat Markup Language（缩写为 ChatML）。
@@ -90,8 +88,11 @@ math: true
 ```
 {% endraw %}
 
-> [!IMPORTANT]
+<!-- markdownlint-capture -->
+<!-- markdownlint-disable -->
 > 如果消息列表中缺少 system 消息，Qwen-1.5-1.8B-Chat 的模板会自动添加一个，其内容为 `You are a helpful assistant.`。
+{: .prompt-tip }
+<!-- markdownlint-restore -->
 
 ## Gemma-1.1-2B-IT
 
@@ -120,8 +121,11 @@ math: true
 ```
 {% endraw %}
 
-> [!IMPORTANT]
+<!-- markdownlint-capture -->
+<!-- markdownlint-disable -->
 > Gemma-1.1-2B-IT 不支持 system 消息，此外 assistant 消息在内部会被重命名为 model 消息。
+{: .prompt-info }
+<!-- markdownlint-restore -->
 
 ## Llama3-8B-Instruct
 
@@ -155,8 +159,11 @@ math: true
 |    Qwen-1.5-1.8B-Chat    |               Tiktoken               | &lt;&#124;im_start&#124;&gt;、&lt;&#124;im_end&#124;&gt;                                                                              | -                                                                      | system、user、assistant                                   |      是      |
 |    Llama3-8B-Instruct    | Tokenizers (converted from Tiktoken) | &lt;&#124;begin_of_text&#124;&gt;、&lt;&#124;start_header_id&#124;&gt;、&lt;&#124;end_header_id&#124;&gt;、&lt;&#124;eot_id&#124;&gt; | -                                                                      | system、user、assistant                                   |      是      |
 
-> [!NOTE]
+<!-- markdownlint-capture -->
+<!-- markdownlint-disable -->
 > “是否支持推理”是指模板是否支持 `add_generation_prompt` 开关，以在推理时自动添加 assistant 后缀。
+{: .prompt-tip }
+<!-- markdownlint-restore -->
 
 ## 其他注意事项
 
