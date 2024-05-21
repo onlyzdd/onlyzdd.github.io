@@ -88,11 +88,8 @@ math: true
 ```
 {% endraw %}
 
-<!-- markdownlint-capture -->
-<!-- markdownlint-disable -->
-> 如果消息列表中缺少 system 消息，Qwen-1.5-1.8B-Chat 的模板会自动添加一个，其内容为 `You are a helpful assistant.`。
 {: .prompt-tip }
-<!-- markdownlint-restore -->
+> 如果消息列表中缺少 system 消息，Qwen-1.5-1.8B-Chat 的模板会自动添加一个，其内容为 `You are a helpful assistant.`。
 
 ## Gemma-1.1-2B-IT
 
@@ -121,11 +118,8 @@ math: true
 ```
 {% endraw %}
 
-<!-- markdownlint-capture -->
-<!-- markdownlint-disable -->
 > Gemma-1.1-2B-IT 不支持 system 消息，此外 assistant 消息在内部会被重命名为 model 消息。
 {: .prompt-info }
-<!-- markdownlint-restore -->
 
 ## Llama3-8B-Instruct
 
@@ -159,11 +153,8 @@ math: true
 |    Qwen-1.5-1.8B-Chat    |               Tiktoken               | &lt;&#124;im_start&#124;&gt;、&lt;&#124;im_end&#124;&gt;                                                                              | -                                                                      | system、user、assistant                                   |      是      |
 |    Llama3-8B-Instruct    | Tokenizers (converted from Tiktoken) | &lt;&#124;begin_of_text&#124;&gt;、&lt;&#124;start_header_id&#124;&gt;、&lt;&#124;end_header_id&#124;&gt;、&lt;&#124;eot_id&#124;&gt; | -                                                                      | system、user、assistant                                   |      是      |
 
-<!-- markdownlint-capture -->
-<!-- markdownlint-disable -->
 > “是否支持推理”是指模板是否支持 `add_generation_prompt` 开关，以在推理时自动添加 assistant 后缀。
 {: .prompt-tip }
-<!-- markdownlint-restore -->
 
 ## 其他注意事项
 
