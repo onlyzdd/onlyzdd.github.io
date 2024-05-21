@@ -1,11 +1,4 @@
----
-title: 大模型基础组件——分词器
-date: 2024-04-27 00:00:00
-author: onlyzdd
-categories: [自然语言处理, 分词器, 大模型]
-tags: [nlp, tokenizer, llm]
-math: true
----
+USER_DEFINED Symbols
 
 ## 为什么分词
 
@@ -320,11 +313,9 @@ from transformers import GemmaTokenizer, AutoTokenizer
 gemma_tokenizer = GemmaTokenizer.from_pretrained("google/gemma-7b")
 gemma_auto_tokenizer = AutoTokenizer.from_pretrained("google/gemma-7b")
 
-# CONTROL Symbols
 print(gemma_tokenizer.tokenize("<bos>")) # ['<bos>']
 print(gemma_auto_tokenizer.tokenize("<bos>")) # ['<bos>']
 
-# USER_DEFINED Symbols
 print(gemma_tokenizer.tokenize("<s>")) # ['<s>']
 print(gemma_auto_tokenizer.tokenize("<s>")) # ['<', 's', '>']
 ```
