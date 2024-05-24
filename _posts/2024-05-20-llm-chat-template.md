@@ -153,7 +153,7 @@ math: true
 |    Qwen-1.5-1.8B-Chat    |               Tiktoken               | &lt;&#124;im_start&#124;&gt;、&lt;&#124;im_end&#124;&gt;                                                                              | -                                                                      | system、user、assistant                                   |      是      |
 |    Llama3-8B-Instruct    | Tokenizers (converted from Tiktoken) | &lt;&#124;begin_of_text&#124;&gt;、&lt;&#124;start_header_id&#124;&gt;、&lt;&#124;end_header_id&#124;&gt;、&lt;&#124;eot_id&#124;&gt; | -                                                                      | system、user、assistant                                   |      是      |
 
-{: .prompt-tip }
+{: .prompt-info }
 > “是否支持推理”是指模板是否支持 `add_generation_prompt` 开关，以在推理时自动添加 assistant 后缀。
 
 ## 其他注意事项
