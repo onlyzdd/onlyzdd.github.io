@@ -18,12 +18,9 @@ def process_front_matter(infp):
 
 
 def process_body(infp):
-    title, lines = "", []
+    lines = []
     for line in infp:
         if line.startswith("{% raw %}") or line.startswith("{% endraw %}"):
-            continue
-        if line.startswith("# "):
-            _, title = line.split("# ", 1)
             continue
         if line.startswith("{: .prompt-tip }"):
             line = "> [!TIP]\n"
@@ -36,7 +33,7 @@ def process_body(infp):
         else:
             pass
         lines.append(line)
-    return title, "".join(lines)
+    return "".join(lines)
 
 
 input_dir = Path("./_posts")
@@ -47,9 +44,10 @@ for input_file in input_dir.glob("*.md"):
     output_file = output_dir / input_file.name
     if output_file.exists() and output_file.lstat().st_mtime > input_file.lstat().st_mtime:
         continue
+    print(f"processing {input_file}")
     with input_file.open() as infp, output_file.open("w") as outfp:
         front_matter = process_front_matter(infp)
-        title, body = process_body(infp)
-        title = title if title else f"# {front_matter.get('title')}"
+        body = process_body(infp)
+        title = f"# {front_matter.get('title')}"
         output = title.strip() + "\n\n" + body.lstrip()
         outfp.write(output)
