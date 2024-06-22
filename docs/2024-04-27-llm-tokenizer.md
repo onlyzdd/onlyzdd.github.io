@@ -1,4 +1,4 @@
-USER_DEFINED Symbols
+# 大模型基础组件——分词器
 
 ## 为什么分词
 
@@ -30,7 +30,8 @@ USER_DEFINED Symbols
   - 模型：GPT 系
   - 分词：需能表达语义、无损复原输入，即 Decode(Encode(text)) = text
 
-> 广义空格是指 ` `、`\t`、`\r`、`\n` 等。
+> [!TIP]
+> 广义空格是指空格、制表、回车、换行等。
 
 ### 分词流水线
 
@@ -313,9 +314,11 @@ from transformers import GemmaTokenizer, AutoTokenizer
 gemma_tokenizer = GemmaTokenizer.from_pretrained("google/gemma-7b")
 gemma_auto_tokenizer = AutoTokenizer.from_pretrained("google/gemma-7b")
 
+# CONTROL Symbols
 print(gemma_tokenizer.tokenize("<bos>")) # ['<bos>']
 print(gemma_auto_tokenizer.tokenize("<bos>")) # ['<bos>']
 
+# USER_DEFINED Symbols
 print(gemma_tokenizer.tokenize("<s>")) # ['<s>']
 print(gemma_auto_tokenizer.tokenize("<s>")) # ['<', 's', '>']
 ```
